@@ -25,7 +25,7 @@ function backup {
 
 result=`python -mplatform`
 platform=""
-for i in "Centos","Centos" "Ubuntu","Ubuntu" "Debian" "Deepin","Debian" "Darwin","MacOSX"; do
+for i in "Centos","Centos" "Ubuntu","Ubuntu" "Debian" "Deepin","Debian" "Darwin","MacOSX" "Manjaro"; do
     key=${i%,*}; value=${i#*,};
     if [ `grep -ic $key <<< ${result}` == 1 ]; then
        platform=$value
@@ -44,6 +44,11 @@ case $platform in
     Ubuntu|Debian|Deepin)
         sudo bash scripts/init-vim-ubuntu.sh
         ;;
+    Manjaro)
+        sudo pacman -Sy
+        sudo pacman -S --noconfirm vim grep cmake git
+	    echoo "Manjaro"
+	;;
     MacOSX)
         echoo ">>> Install dependencies ..."
         bash scripts/init-vim-osx.sh
